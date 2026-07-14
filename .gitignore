@@ -1,0 +1,8 @@
+# VSCode configuration
+.vscode/
+
+# .vvp folder
+vvps/
+
+# waveform files
+waves/
