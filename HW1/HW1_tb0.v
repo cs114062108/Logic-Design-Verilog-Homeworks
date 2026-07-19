@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-// Module Name: hw1_testbench_9
+// Module Name: hw1_testbench_0
 // Description: Testbench for 8-bit CLA Adder/Subtractor
 
 module hw1_testbench_0;

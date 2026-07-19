@@ -35,6 +35,18 @@ hw1_0_wave: $(vvp1_0) | $(wavedir)
 	@echo [Homework 1 simulation and wave]
 	$(VP) $^
 
+hw1_1: hw1_1_com hw1_1_wave
+src1_1 = HW1_adder.v HW1_4bit_cla.v HW1_8bit_cla.v HW1_tb1.v
+v1_1 = $(patsubst %, HW1/%, $(src1_1))
+vvp1_1 = $(vvpdir)/HW1_1.vvp
+hw1_1_com: $(v1_1) | $(vvpdir)
+	@echo [Homework 1 compile]
+	$(IV) -o $(vvp1_1) $^
+wave1_1 = $(wavedir)/HW1_1.vcd
+hw1_1_wave: $(vvp1_1) | $(wavedir)
+	@echo [Homework 1 simulation and wave]
+	$(VP) $^
+
 hazard0_1a: hz0_1a_com hz0_1a_wave
 v_hz0_1a = Hazard/Hazard0_1a.v Hazard/Hazard0_1t.v
 vvp_hz0_1a = $(vvpdir)/Hazard0_1a.vvp
