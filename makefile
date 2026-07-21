@@ -63,8 +63,8 @@ $(vvpdir):
 $(wavedir):
 	mkdir -p $(wavedir)
 
-vvps = $(vvp0_1a) $(vvp0_2a) $(vvp1_0) $(vvp_hz0_1a)
-waves = $(wave0_1a) $(wave0_2a) $(wave1_0) $(wave_hz0_1a)
+vvps = $(vvp0_1a) $(vvp0_2a) $(vvp1_0) $(vvp1_1) $(vvp_hz0_1a)
+waves = $(wave0_1a) $(wave0_2a) $(wave1_0) $(wave1_1) $(wave_hz0_1a)
 
 .PHONY: clean
 clean:

@@ -3,6 +3,12 @@
 
 # .vvp files
 vvps/
+*.vvp
 
 # waveform .vcd files
 waves/
+*.vcd
+
+# report pdf
+*.pdf
+*.html
