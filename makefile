@@ -1,74 +1,86 @@
-vvpdir = vvps
-wavedir = waves
-
+# -- Compiler and directory variables --
+# Compilers
 IV = iverilog
 VP = vvp
 GTK = gtkwave
 
-hw0_1a: hw0_1a_com hw0_1a_wave
+# Directories
+vvpdir = vvps
+wavedir = waves
+
+# -- Source declare --
+# Verilog source files
 v0_1a = HW0/HW0_1a.v HW0/HW0_1t.v
-vvp0_1a = $(vvpdir)/HW0_1a.vvp
-hw0_1a_com: $(v0_1a) | $(vvpdir)
-	$(IV) -o $(vvp0_1a) $^
-wave0_1a = $(wavedir)/HW0_1.vcd
-hw0_1a_wave: $(vvp0_1a) | $(wavedir)
-	$(VP) $^
-
-hw0_2a: hw0_2a_com hw0_2a_wave
 v0_2a = HW0/HW0_2a.v HW0/HW0_2t.v
-vvp0_2a = $(vvpdir)/HW0_2a.vvp
-hw0_2a_com: $(v0_2a) | $(vvpdir)
-	$(IV) -o $(vvp0_2a) $^
-wave0_2a = $(wavedir)/HW0_2.vcd
-hw0_2a_wave: $(vvp0_2a) | $(wavedir)
-	$(VP) $^
 
-hw1_0: hw1_0_com hw1_0_wave
 src1_0 = HW1_adder.v HW1_4bit_cla.v HW1_8bit_cla.v HW1_tb0.v
 v1_0 = $(patsubst %, HW1/%, $(src1_0))
-vvp1_0 = $(vvpdir)/HW1_0.vvp
-hw1_0_com: $(v1_0) | $(vvpdir)
-	@echo [Homework 1 compile]
-	$(IV) -o $(vvp1_0) $^
-wave1_0 = $(wavedir)/HW1_0.vcd
-hw1_0_wave: $(vvp1_0) | $(wavedir)
-	@echo [Homework 1 simulation and wave]
-	$(VP) $^
-
-hw1_1: hw1_1_com hw1_1_wave
 src1_1 = HW1_adder.v HW1_4bit_cla.v HW1_8bit_cla.v HW1_tb1.v
 v1_1 = $(patsubst %, HW1/%, $(src1_1))
-vvp1_1 = $(vvpdir)/HW1_1.vvp
-hw1_1_com: $(v1_1) | $(vvpdir)
-	@echo [Homework 1 compile]
-	$(IV) -o $(vvp1_1) $^
-wave1_1 = $(wavedir)/HW1_1.vcd
-hw1_1_wave: $(vvp1_1) | $(wavedir)
-	@echo [Homework 1 simulation and wave]
-	$(VP) $^
 
-hazard0_1a: hz0_1a_com hz0_1a_wave
+v2_1 = HW2/HW2_demux.v HW2/HW2_1_tb0.v
+
 v_hz0_1a = Hazard/Hazard0_1a.v Hazard/Hazard0_1t.v
-vvp_hz0_1a = $(vvpdir)/Hazard0_1a.vvp
-hz0_1a_com: $(v_hz0_1a) | $(vvpdir)
-	@echo [Hazard test compile]
-	$(IV) -o $(vvp_hz0_1a) $^
-wave_hz0_1a = $(wavedir)/Hazard0_1a.vcd
-hz0_1a_wave: $(vvp_hz0_1a) | $(wavedir)
-	@echo [Hazard test simulation and wave]
-	$(VP) $^
 
-$(vvpdir):
-	mkdir -p $(vvpdir)
-$(wavedir):
-	mkdir -p $(wavedir)
+# .vvp requirements
+vvp0_1a = $(vvpdir)/HW0_1a.vvp
+$(vvp0_1a): $(v0_1a)
+vvp0_2a = $(vvpdir)/HW0_2a.vvp
+$(vvp0_2a): $(v0_2a)
 
-vvps = $(vvp0_1a) $(vvp0_2a) $(vvp1_0) $(vvp1_1) $(vvp_hz0_1a)
-waves = $(wave0_1a) $(wave0_2a) $(wave1_0) $(wave1_1) $(wave_hz0_1a)
+vvp1_0 = $(vvpdir)/HW1_0.vvp
+$(vvp1_0): $(v1_0)
+vvp1_1 = $(vvpdir)/HW1_1.vvp
+$(vvp1_1): $(v1_1)
 
-.PHONY: clean
+vvp2_1 = $(vvpdir)/HW2_1.vvp
+$(vvp2_1): $(v2_1)
+
+vvp_hz0_1a = $(vvpdir)/HZ0_1a.vvp
+$(vvp_hz0_1a): $(v_hz0_1a)
+
+# --- Targets ---
+.PHONY: clean hw0_1a hw0_2a hw1_0 hw1_1 hazard0_1a
+
+hw0_1a: hw0_1a_com hw0_1a_run
+hw0_1a_com: $(vvp0_1a)
+hw0_1a_run: run-HW0_1a
+
+hw0_2a: hw0_2a_com hw0_2a_run
+hw0_2a_com: $(vvp0_2a)
+hw0_2a_run: run-HW0_2a
+
+hw1_0: hw1_0_com hw1_0_run
+hw1_0_com: $(vvp1_0)
+hw1_0_run: run-HW1_0
+
+hw1_1: hw1_1_com hw1_1_run
+hw1_1_com: $(vvp1_1)
+hw1_1_run: run-HW1_1
+
+hw2_1: hw2_1_com hw2_1_run
+hw2_1_com: $(vvp2_1)
+hw2_1_run: run-HW2_1
+
+hazard0_1a: hz0_1a_com hz0_1a_run
+hz0_1a_com: $(vvp_hz0_1a)
+hz0_1a_run: run-HZ0_1a
+
+# -- Universal make logic --
+# Compile pattern rule
+$(vvpdir)/%.vvp: | $(vvpdir)
+	@echo "==> Compiling $@"
+	$(IV) -o $@ $^
+
+# Simulation
+run-%: $(vvpdir)/%.vvp | $(wavedir)
+	@echo "==> Simulating $<"
+	$(VP) $<
+
+# Directories
+$(vvpdir) $(wavedir):
+	mkdir -p $@
+
+# -- Clean --
 clean:
-	rm -f $(vvps)
-	rm -f $(waves)
-	rm -rf $(vvpdir)
-	rm -rf $(wavedir)
+	rm -rf $(vvpdir) $(wavedir)

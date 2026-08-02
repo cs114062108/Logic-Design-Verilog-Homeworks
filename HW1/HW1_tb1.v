@@ -5,7 +5,6 @@
 // Description: Exhaustive Self-Checking Testbench for 8-bit CLA.
 //              Tests all 131,072 input combinations for both
 //              addition and subtraction.
-//              All comments and display logs are in English.
 // =================================================================
 
 module hw1_testbench_1;
