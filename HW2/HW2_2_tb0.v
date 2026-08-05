@@ -52,28 +52,42 @@ module hw2_2_testbench_0;
         // Changing D at t = 20ns gives 10ns setup time.
         #10;
         D = 1'b1; 
-        #10; // At t=30ns (CLK falling edge), Q should update to 1 after 6ns or 4ns (at t=36ns or t=34ns).
+        #10; // At t = 30ns (CLK falling edge), Q should update to 1 after 6ns or 4ns (at t = 36ns or t = 34ns).
 
         // --- Testcase 2: D=0 with sufficient Setup Time ---
         // Next neg-edge at t = 50ns.
         // Changing D at t = 40ns gives 10ns setup time.
         #10;
         D = 1'b0;
-        #10; // At t=50ns (CLK falling edge), Q should update to 0 after 6ns (at t=56ns).
+        #10; // At t = 50ns (CLK falling edge), Q should update to 0 after 6ns (at t = 56ns).
 
-        // --- Testcase 3: Setup Time Violation (<6ns) ---
+        // --- Testcase 3: D=1 with exact 6ns minimum Setup Time --
         // Next neg-edge at t = 70ns.
-        // Changing D at t = 68ns gives only 2ns setup time (<6ns requirement).
-        #18;
-        D = 1'b1; // t = 68ns
-        #2;
+        // Changing D at t = 64ns gives exact 6ns setup time.
+        #14;
+        D = 1'b1; // t = 64ns
+        #6; // At t = 70ns (CLK falling edge)
 
-        // --- Testcase 4: D=0 with sufficient Setup Time, after violation ---
+        // --- Testcase 4:
         // Next neg-edge at t = 90ns.
-        // Changing D at t = 82ns gives 8ns setup time.
-        #12;
-        D = 1'b0; // t = 82ns
+        // Changing D at t = 84ns gives exact 6ns setup time.
+        #14;
+        D = 1'b0; // t = 84ns
+        #6; // t = 90ns (CLK falling edge)
+
+        // --- Testcase 5: Setup Time Violation (<6ns) ---
+        // Next neg-edge at t = 110ns.
+        // Changing D at t = 108ns gives only 2ns setup time (<6ns requirement).
         #18;
+        D = 1'b1; // t = 108ns
+        #2; // At t = 110ns (CLK falling edge)
+
+        // --- Testcase 6: D=0 with sufficient Setup Time, after violation ---
+        // Next neg-edge at t = 130ns.
+        // Changing D at t = 122ns gives 8ns setup time.
+        #12;
+        D = 1'b0; // t = 122ns
+        #18; // At t = 130ns (CLK falling edge)
 
         #10;
         $display("-----------------------------------------------");
