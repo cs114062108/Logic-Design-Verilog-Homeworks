@@ -149,9 +149,15 @@ To determine the minimum setup time in Verilog simulation (`hw2_2_testbench_0`),
 
 <div style="page-break-after: always;"></div>
 
-### **Simulation Result:**
-![HW2_2_wave_0.png](../waveforms/HW2_2_wave_0.png)
+### **Simulation Results:**
+| <div align="center">Simulation version 0</div> |
+| --- |
+| ![HW2_2_wave_0.png](../waveforms/HW2_2_wave_0.png) |
 
-![HW2_2_wave_1_0.png](../waveforms/HW2_2_wave_1_0.png)
+| <div align="center">Simulation version 1 (0 ~ 130 ns)</div> |
+| --- |
+| ![HW2_2_wave_1_0.png](../waveforms/HW2_2_wave_1_0.png) |
 
-![HW2_2_wave_1_1.png](../waveforms/HW2_2_wave_1_1.png)
+| <div align="center">Simulation version 1 (20 ~ 150 ns)</div> |
+| --- |
+| ![HW2_2_wave_1_1.png](../waveforms/HW2_2_wave_1_1.png) |
