@@ -22,6 +22,10 @@ v2_1 = HW2/HW2_demux.v HW2/HW2_1_tb0.v
 src2_2 = HW2_SRLatch.v HW2_DLatch.v HW2_DFF.v HW2_2_tb0.v
 v2_2 = $(patsubst %, HW2/%, $(src2_2))
 
+src3_0 = mod.v tb0.v
+pre3_0 = HW3_114062108
+v3_0 = $(patsubst %, HW3/$(pre3_0)_%, $(src3_0))
+
 v_hz0_1a = Hazard/Hazard0_1a.v Hazard/Hazard0_1t.v
 
 # .vvp requirements
@@ -40,11 +44,14 @@ $(vvp2_1): $(v2_1)
 vvp2_2 = $(vvpdir)/HW2_2.vvp
 $(vvp2_2): $(v2_2)
 
+vvp3_0 = $(vvpdir)/HW3_0.vvp
+$(vvp3_0): $(v3_0)
+
 vvp_hz0_1a = $(vvpdir)/HZ0_1a.vvp
 $(vvp_hz0_1a): $(v_hz0_1a)
 
 # --- Targets ---
-.PHONY: clean hw0_1a hw0_2a hw1_0 hw1_1 hw2_1 hw2_2 hazard0_1a
+.PHONY: clean hw0_1a hw0_2a hw1_0 hw1_1 hw2_1 hw2_2 hw3_0 hazard0_1a
 
 hw0_1a: hw0_1a_com hw0_1a_sim
 hw0_1a_com: $(vvp0_1a)
@@ -69,6 +76,10 @@ hw2_1_sim: run-HW2_1
 hw2_2: hw2_2_com hw2_2_sim
 hw2_2_com: $(vvp2_2)
 hw2_2_sim: run-HW2_2
+
+hw3_0: hw3_0_com hw3_0_sim
+hw3_0_com: $(vvp3_0)
+hw3_0_sim: run-HW3_0
 
 hazard0_1a: hz0_1a_com hz0_1a_sim
 hz0_1a_com: $(vvp_hz0_1a)
