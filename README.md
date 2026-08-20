@@ -14,3 +14,9 @@
 | [![HW2_DFF.svg](/diagrams/HW2_DFF.svg)](reports/HW2_report.md) |
 
 <div style="page-break-after: always;"></div>
+
+| HW3_report |
+| --- |
+| [![HW3_FSM_moore_0.svg](state_graphs/HW3_FSM_moore_0.svg)](reports/HW3_report_114062108.md) |
+
+<div style="page-break-after: always;"></div>

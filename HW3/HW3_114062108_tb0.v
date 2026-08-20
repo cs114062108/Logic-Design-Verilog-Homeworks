@@ -1,10 +1,14 @@
 `timescale 1ns/1ps
 
 module Warn_Pattern_tb0;
+    // inputs
     reg clk = 1'b1;
     reg rst_n = 1'b1;
     reg in = 1'b0;
-    wire [1:0] out;
+    
+    // outputs
+    wire [1:0] out0;
+    wire [1:0] out1;
 
     // specify duration of a clock cycle.
     parameter cyc = 10;
@@ -18,7 +22,14 @@ module Warn_Pattern_tb0;
         .clk (clk),
         .rst_n (rst_n),
         .in (in),
-        .out (out)
+        .out (out0)
+    );
+    
+    Warn_Pattern_1 WP1 (
+        .clk (clk),
+        .rst_n (rst_n),
+        .in (in),
+        .out (out1)
     );
 
     // this blocks is for creating the waveform
@@ -31,14 +42,17 @@ module Warn_Pattern_tb0;
     // Variables for file loading
     integer file;
     integer r_cnt, r_seq;
+    
+    // test
+    integer r_test;
     reg [3:0] A, B, C, D;
-    reg [15:0] buff_cnt;
+    reg [15:0] buff_test;
     
     // Load the pattern file
     initial begin
         file = $fopen("./HW3/HW3_pat0.dat", "r");
-        r_cnt = $fscanf(file, "%b", buff_cnt);
-        {A, B, C, D} = buff_cnt;
+        r_test = $fscanf(file, "%b", buff_test);
+        {A, B, C, D} = buff_test;
         $display("----------------------------------------------");
         $display("              File Load Test");
         $display("----------------------------------------------");
@@ -52,10 +66,10 @@ module Warn_Pattern_tb0;
     // the testpattern designs 
     initial begin
         //..write more code here ...//
-        $display("----------------------------------------------");
-        $display("Time\t CLK\t rst_n\t in\t | \t out ");
-        $display("----------------------------------------------");
-        $monitor("%0dns\t %b\t %b\t %b\t | \t %02b ", $time, clk, rst_n, in, out);
+        $display("------------------------------------------------------");
+        $display("Time\t CLK\t rst_n\t in\t | \t out0 \t out1 ");
+        $display("------------------------------------------------------");
+        $monitor("%0dns\t %b\t %b\t %b\t | \t %02b \t %02b", $time, clk, rst_n, in, out0, out1);
 
         rst_n <= 1;
         in <= 0;
@@ -112,7 +126,7 @@ module Warn_Pattern_tb0;
 
         @(negedge clk);
         @(negedge clk);
-        $display("----------------------------------------------");
+        $display("------------------------------------------------------");
         $finish();
     end
 

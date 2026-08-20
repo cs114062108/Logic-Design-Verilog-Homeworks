@@ -22,7 +22,7 @@ v2_1 = HW2/HW2_demux.v HW2/HW2_1_tb0.v
 src2_2 = HW2_SRLatch.v HW2_DLatch.v HW2_DFF.v HW2_2_tb0.v
 v2_2 = $(patsubst %, HW2/%, $(src2_2))
 
-src3_0 = mod.v tb0.v
+src3_0 = mod.v mod1.v tb0.v
 pre3_0 = HW3_114062108
 v3_0 = $(patsubst %, HW3/$(pre3_0)_%, $(src3_0))
 
