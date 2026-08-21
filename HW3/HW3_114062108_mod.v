@@ -22,8 +22,8 @@ module Warn_Pattern (
     reg [3:0] state;
     reg [3:0] next_state;
 
-    // Combinational sychronous reset
-    reg rst; // synchronous rst
+    // Combinational asychronous reset
+    reg rst; // asynchronous rst
 
     // --------------------------------------
     // FSM State Register (Sequential)

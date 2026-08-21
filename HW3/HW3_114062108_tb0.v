@@ -71,61 +71,66 @@ module Warn_Pattern_tb0;
         $display("------------------------------------------------------");
         $monitor("%0dns\t %b\t %b\t %b\t | \t %02b \t %02b", $time, clk, rst_n, in, out0, out1);
 
+        // --- Init and reset ---
         rst_n <= 1;
         in <= 0;
+        
+        @(negedge clk); // 5 ns
+        rst_n <= 1;     // 10 ns
 
-        @(negedge clk);
-        rst_n <= 1;
+        @(negedge clk); // 15 ns
+        rst_n <= 0;     // 20 ns
 
-        @(negedge clk);
-        rst_n <= 0;
-
-        @(negedge clk);
-        rst_n <= 1;
+        // --- Test Pattern: 1 -> 0 -> 1 -> 1 -> 0 -> 0 ---
+        @(negedge clk); // 25 ns
+        rst_n <= 1;     // 30 ns
         in <= 1;
 
-        @(negedge clk);
+        @(negedge clk); // 35 ns
+        in <= 0;        // 40 ns
+
+        @(negedge clk); // 45 ns
+        in <= 1;        // 50 ns
+
+        @(negedge clk); // 55 ns
+        in <= 1;        // 60 ns
+
+        @(negedge clk); // 65 ns
+        in <= 0;        // 70 ns
+
+        // --- Test Pattern: 0 -> 0 ---
+        @(negedge clk); // 75 ns
+        @(negedge clk); // 85 ns
+
+        // --- Test Pattern: 0 -> 1 -> 1 -> 0 -> 1 -> 1 -> 0 (!rst_n) -> 0
+        @(negedge clk); // 95 ns
+        in <= 0;        // 100 ns
+
+        @(negedge clk); // 105 ns
+        in <= 1;        // 110 ns
+
+        @(negedge clk); // 115 ns
+        in <= 1;        // 120 ns
+
+        @(negedge clk); // 125 ns
+        in <= 0;        // 130 ns
+
+        @(negedge clk); // 135 ns
+        in <= 1;        // 140 ns
+
+        @(negedge clk); // 145 ns
+        in <= 1;        // 150 ns
+
+        @(negedge clk); // 155 ns
+        rst_n <= 0;     // 160 ns
         in <= 0;
 
-        @(negedge clk);
-        in <= 1;
+        @(negedge clk); // 165 ns
+        rst_n <= 1;     // 170 ns
 
-        @(negedge clk);
-        in <= 1;
-
-        @(negedge clk);
-        in <= 0;
-
-        @(negedge clk);
-        @(negedge clk);
-
-        @(negedge clk);
-        in <= 0;
-
-        @(negedge clk);
-        in <= 1;
-
-        @(negedge clk);
-        in <= 1;
-
-        @(negedge clk);
-        in <= 0;
-
-        @(negedge clk);
-        in <= 1;
-
-        @(negedge clk);
-        in <= 1;
-
-        @(negedge clk);
-        rst_n <= 0;
-        in <= 0;
-
-        @(negedge clk);
-        rst_n <= 1;
-
-        @(negedge clk);
-        @(negedge clk);
+        // --- End of tests ---
+        @(negedge clk); // 175 ns
+        @(negedge clk); // 185 ns
         $display("------------------------------------------------------");
         $finish();
     end
