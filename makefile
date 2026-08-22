@@ -22,9 +22,12 @@ v2_1 = HW2/HW2_demux.v HW2/HW2_1_tb0.v
 src2_2 = HW2_SRLatch.v HW2_DLatch.v HW2_DFF.v HW2_2_tb0.v
 v2_2 = $(patsubst %, HW2/%, $(src2_2))
 
-src3_0 = mod.v mod1.v tb0.v
-pre3_0 = HW3_114062108
-v3_0 = $(patsubst %, HW3/$(pre3_0)_%, $(src3_0))
+pre3 = HW3_114062108
+mod3 = mod.v mod1.v
+src3_0 = $(mod3) tb0.v
+v3_0 = $(patsubst %, HW3/$(pre3)_%, $(src3_0))
+src3_1 = $(mod3) tb1.v
+v3_1 = $(patsubst %, HW3/$(pre3)_%, $(src3_1))
 
 v_hz0_1a = Hazard/Hazard0_1a.v Hazard/Hazard0_1t.v
 
@@ -46,6 +49,8 @@ $(vvp2_2): $(v2_2)
 
 vvp3_0 = $(vvpdir)/HW3_0.vvp
 $(vvp3_0): $(v3_0)
+vvp3_1 = $(vvpdir)/HW3_1.vvp
+$(vvp3_1): $(v3_1)
 
 vvp_hz0_1a = $(vvpdir)/HZ0_1a.vvp
 $(vvp_hz0_1a): $(v_hz0_1a)
@@ -80,6 +85,10 @@ hw2_2_sim: run-HW2_2
 hw3_0: hw3_0_com hw3_0_sim
 hw3_0_com: $(vvp3_0)
 hw3_0_sim: run-HW3_0
+
+hw3_1: hw3_1_com hw3_1_sim
+hw3_1_com: $(vvp3_1)
+hw3_1_sim: run-HW3_1
 
 hazard0_1a: hz0_1a_com hz0_1a_sim
 hz0_1a_com: $(vvp_hz0_1a)
